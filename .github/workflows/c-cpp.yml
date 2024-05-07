@@ -29,6 +29,15 @@ jobs:
       run: |
         cd linux-6.8.9 #change dir
         make -j$(nproc)
+        make modules -j$(nproc)
 
-    - name: Test Kernel (optional)
-      run: make test (replace with your kernel test command)
+    - name: Upload Kernel Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: kernel-artifacts
+        path: |
+          linux-6.8.9/arch/x86/boot/bzImage
+          linux-6.8.9/System.map
+          linux-6.8.9/.config
+          linux-6.8.9/modules
+          linux-6.8.9/include
