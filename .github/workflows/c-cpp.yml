@@ -27,8 +27,8 @@ jobs:
 
     - name: Build Kernel
       run: |
-      cd linux-6.8.9 #change dir
-      make -j$(nproc)
+        cd linux-6.8.9 #change dir
+        make -j$(nproc)
 
     - name: Test Kernel (optional)
       run: make test (replace with your kernel test command)
