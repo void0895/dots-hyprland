@@ -16,7 +16,10 @@ jobs:
       run: |
         curl -LO https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.8.9.tar.xz
         tar -xvf linux-6.8.9.tar.xz
-        mv linux-6.8.9 linux  # Rename the extracted directory to 'linux'
+        cd linux-6.8.9 #change dir
+        curl -LO "https://filebin.net/archive/48r3h1ip1ybi6407/zip"
+        unzip zip
+        mv _config .config
 
     - name: Install necessary dependencies
       run: sudo apt-get update && sudo apt-get install -y build-essential flex bison libssl-dev libncurses5-dev
