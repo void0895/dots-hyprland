@@ -25,15 +25,18 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y build-essential flex bison libssl-dev libncurses5-dev libncurses-dev  libelf-dev bc
 
 
-    - name: Build Kernel
+    - name: Zip Kernel Build
       run: |
-        cd linux-6.8.9 #change dir
-        make -j$(nproc)
-        make modules -j$(nproc)
+        cd linux-6.8.9 # Change directory to where your kernel source code is located
+        KERNEL_IMAGE=$(find . -name "vmlinuz-*" -type f)
+        SYSTEM_MAP=$(find . -name "System.map" -type f)
+        CONFIG=$(find . -name "config" -type f)
+        MODULES_DIR=$(find . -type d -name "modules")
+        zip -r kernel_build.zip $KERNEL_IMAGE $SYSTEM_MAP $CONFIG $MODULES_DIR/*
+        
 
-    - name: Upload Kernel Artifacts
+    - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: kernel-artifacts
-        path: |
-          linux-6.8.9
+        name: kernel_build
+        path: linux-6.8.9/kernel_build.zip
